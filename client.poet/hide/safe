@@ -1,0 +1,48 @@
+#!/bin/bash
+echo ${__BLESSED_DOT__} ${__BLESSED_CLIENT__}.$*
+${__BLESSED_DOT__} ${__BLESSED_CLIENT__}.$*
+export POET_EZ=${__BLESSED_CLIENT__}.ez
+echo 7666666666
+set | grep __BLESSED
+exit
+FN_EZ_dispatch () {
+    # Z = the client's full pathname ($0)
+    # R = the client's root directory
+    # O = the client's options directory
+    # C = the client's subcommand (after options)
+
+    export Z=$1 ; shift
+    echo "[__dispatch__] assert: [$(basename $Z)] is [__main__]"
+    export R=$(dirname $Z)
+    export O=${R}/.opts
+
+    # Handle special options [-h] and [--help].
+    [ $1. = -h.     ] && FN_EZ_HELP $Z $* && return 
+    [ $1. = --help. ] && FN_EZ_HELP $Z $* && return 
+
+    # Remove and process other options
+    while [ -f $O/o$1 ]; do . $O/o$1 $Z $*; shift; done
+
+    C=$1; shift
+    S1=$R/$C
+    S2=$R/$C/__main__
+
+    if   [ "$C" = "" ]; then FN_EZ_NULL ${Z}
+    elif [ -f ${S1}  ]; then ${S1}      ${*}
+    elif [ -f ${S2}  ]; then ${S2}      ${*}
+    elif [ true      ]; then FN_EZ_MAIN ${C} ${*}
+    fi
+}
+
+FN_EZ_NULL () { echo PURE VIRTUAL FN_EZ_NULL [$*]; }
+FN_EZ_MAIN () { 
+    echo PURE VIRTUAL FN_EZ_MAIN [$*]:
+    while [ ! "$1" = "" ]; do
+        echo "    [$1]"
+        shift
+    done
+}
+FN_EZ_HELP () {
+    echo PURE VIRTUAL FN_EZ_HELP [$*]:
+    poet.ez.usage $* && return
+}

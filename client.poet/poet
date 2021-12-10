@@ -1,0 +1,4 @@
+#!/bin/bash
+export BLPOET_ROOT=$(dirname $__BLESSED_CLIENT__)
+export POET_EZ=${__BLESSED_CLIENT__}.ez
+${__BLESSED_DOT__} ${__BLESSED_CLIENT__}.$*

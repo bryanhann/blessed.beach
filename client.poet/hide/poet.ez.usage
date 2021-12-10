@@ -1,0 +1,7 @@
+#!/bin/bash
+echo  77______________________00
+USAGE=$(dirname $1)/.opts/__usage__
+echo MAIN IS [$1]
+echo USAGE IS [$USAGE]
+[ -x $USAGE ] && $USAGE $*
+$0.py $*

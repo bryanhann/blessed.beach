@@ -1,0 +1,6 @@
+#!/bin/bash
+if   [ "$EZ_isHelp" = "True" ]; then $EZ_dunder_help $EZ_this
+elif [ "$EZ_isHit"  = "True" ]; then $EZ_next $EZ_args
+fi
+
+

@@ -1,0 +1,6 @@
+#!/bin/bash
+out=/tmp/delete.me.$RANDOM
+$*  > $out
+. $out
+rm $out
+

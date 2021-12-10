@@ -1,0 +1,66 @@
+#!/bin/bash
+echo 777
+exp () { export $1="$2"; }
+set_next() {
+   [ "$EZ__NEXT" = "" ] || return 
+   [ -f "$1" ] || return
+   exp EZ_NEXT $1
+}
+
+is_help () { [ $1. = -h. ] || [ $1. = --help. ]; }
+
+is_null () {
+    [ "$1" = "" ] && return 0
+    return 1
+}
+
+is_opt () {
+    [ -f ${PATH_HERE}/.opts/opt-$1 ] && return 0
+    return 1
+}
+
+main () {
+echo 777
+    exp PATH_THIS  ${1} ; shift
+    exp PATH_HERE  $(dirname ${PATH_THIS})
+    exp PATH_OPTS  ${PATH_HERE}/.opts
+    exp PATH_HELP  ${PATH_OPTS}/__help__
+    exp PATH_NULL  ${PATH_OPTS}/__null_
+    exp EZ__HELP
+    exp EZ__OPTS
+    exp EZ__CMD
+    exp EX__ARGS
+    exp EX__NEXT
+    is_help && x EZ__HELP yes || x EX_HELP no
+    set | grep ^EZ__
+    return
+}
+
+main $*
+
+
+
+
+
+
+
+f () {
+    is_help $* && set_help $* && shift
+    while true; do
+        is_opt $* && set_opt $* && shift || break
+    done
+
+    is_null $* && set_null $* && shift
+
+    exp N1 $PATH_HERE/$EZ__CMD
+    exp N2 $PATH_HERE/$EZ__CMD/__main__
+    for path in 3 4 5 6; do
+        echo $path
+    done
+    if   [ ! -z "$EZ__HELP" ]; then exp EZ_E
+    if   [ -f $N1 ]; then exp EZ__NEXT $N1
+    elif [ -f $N2 ]; then exp EZ__NEXT $N2
+    elif
+    set | grep ^EZ__
+}
+

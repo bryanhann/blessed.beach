@@ -1,0 +1,6 @@
+#!/bin/bash
+
+BC=${__BLESSED_CLIENT__}
+
+. ${BC}.__eval__ ${BC}.ez.parse $*
+. ${BC}.ez.handle
