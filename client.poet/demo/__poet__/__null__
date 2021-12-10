@@ -1,3 +1,3 @@
 #!/bin/bash
-$(dirname $0)/dump "DEMO Internal __null__" $0 $*
+blessed.poet dump DEMO/__null__ $0 $*
 
