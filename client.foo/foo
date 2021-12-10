@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "#++FOO [$0] [$*]"
+set | grep ^__BLESSED
+echo "#--FOO [$0] [$*]"

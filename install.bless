@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""
+'Bless' client scripts by installing a blessed proxy.
+
+The only blessings supported here are 'basic' blessings.
+
+This script is governed by the following environment
+control variables:
+
+     __BLESSING_VERBOSE__
+         If true, be verbose when blessing.
+
+     __BLESSING_LBIN__
+        If true, override LBIN for testing purposes.
+"""
+
+import sys
+import os.path
+import os
+from pathlib import Path
+import textwrap
+
+###########################################################
+# GLOBALS
+###########################################################
+
+CTRL_VERBOSE = os.environ.get('__BLESSING_VERBOSE__')
+CTRL_LBIN = os.environ.get('__BLESSING_LBIN__')
+HERE=Path(os.path.realpath(__file__)).parent
+LBIN=Path.home()/f'.local/bin'
+PROXY_TEMPLATE=textwrap.dedent("""\
+    #!/bin/bash
+    export __BLESSED_CLIENT__=%s
+    export __BLESSED_PROXY__=%s
+    export __BLESSED_ROOT__=%s
+    if [ $(echo $0|cut -c1-1) = "/" ];
+    then export __BLESSED_DOT__=
+    else export __BLESSED_DOT__=.
+    fi
+    ${__BLESSED_DOT__} ${__BLESSED_CLIENT__} $*
+    """)
+
+###########################################################
+# FUNCTIONS
+###########################################################
+
+def note(message):
+    """Send note to user if verbose
+
+    arg0: [message] -- typically a string
+    """
+    if CTRL_VERBOSE:
+        print(message)
+
+def bless(client,proxy,root=''):
+    """Create a blessed proxy for client.
+
+    arg0: [client] -- full path to client script
+    arg1: [proxy] -- full path to proxy script
+    arg2: [root] -- option full path to root of repo
+
+    Create a new proxy script for client [client] at
+    path [proxy] as per the blessed client protocol,
+    overwriting any old one that may have existed.
+    """
+    code=PROXY_TEMPLATE % (client,proxy,root)
+    if proxy.exists():
+        os.remove(proxy)
+    proxy.write_text(code)
+    proxy.chmod( 0o777 )
+
+def basic(name):
+    """Bless a local client in a most basic way.
+
+    arg0: [name] -- name of the client
+
+    The most basic of blessings. Assume that the path to the
+    client is [./client.{name}/{name}] and that the path to
+    the proxy is [~/.local/bin/blessed.{name}].
+    """
+    lbin = CTRL_LBIN or LBIN
+    cpath = f'client.{name}/{name}' # relative path to client
+    pname = f'blessed.{name}'       # basename of proxy
+    note(f'    blessing [./{cpath}] to [LBIN/{pname}]')
+    bless( 
+        client = HERE/cpath,
+        proxy = lbin/pname,
+        root = HERE,
+    )
+
+def main():
+    """Perform a basic blessing of all args"""
+    note( f'[{HERE}]:' )
+    for name in sys.argv[1:]:
+        basic(name)
+
+###########################################################
+# INVOKE MAIN
+###########################################################
+
+if __name__=='__main__':
+    main()
