@@ -23,21 +23,22 @@ import textwrap
 ###########################################################
 # GLOBALS
 ###########################################################
+HERE=Path(os.path.realpath(__file__)).parent
 
 CTRL_VERBOSE = os.environ.get('__BLESSING_VERBOSE__')
 CTRL_LBIN = os.environ.get('__BLESSING_LBIN__')
 HERE=Path(os.path.realpath(__file__)).parent
-LBIN=Path.home()/f'.local/bin'
+LBIN=os.environ.get('BCP_LBIN') or Path.home()/f'.local/bin'
+LBIN=Path(LBIN)
 PROXY_TEMPLATE=textwrap.dedent("""\
     #!/bin/bash
-    export __BLESSED_CLIENT__=%s
-    export __BLESSED_PROXY__=%s
-    export __BLESSED_ROOT__=%s
+    export BLthis=%s
+    export BLproxy=%s
     if [ $(echo $0|cut -c1-1) = "/" ];
-    then export __BLESSED_DOT__=
-    else export __BLESSED_DOT__=.
+    then export BLdot=
+    else export BLdot=.
     fi
-    ${__BLESSED_DOT__} ${__BLESSED_CLIENT__} $*
+    ${BLdot} ${BLthis} $*
     """)
 
 ###########################################################
@@ -63,7 +64,7 @@ def bless(client,proxy,root=''):
     path [proxy] as per the blessed client protocol,
     overwriting any old one that may have existed.
     """
-    code=PROXY_TEMPLATE % (client,proxy,root)
+    code=PROXY_TEMPLATE % (client,proxy)
     if proxy.exists():
         os.remove(proxy)
     proxy.write_text(code)
@@ -81,7 +82,6 @@ def basic(name):
     lbin = CTRL_LBIN or LBIN
     cpath = f'client.{name}/{name}' # relative path to client
     pname = f'blessed.{name}'       # basename of proxy
-    note(f'    blessing [./{cpath}] to [LBIN/{pname}]')
     bless( 
         client = HERE/cpath,
         proxy = lbin/pname,
@@ -90,9 +90,10 @@ def basic(name):
 
 def main():
     """Perform a basic blessing of all args"""
-    note( f'[{HERE}]:' )
-    for name in sys.argv[1:]:
-        basic(name)
+    LBIN.is_dir() or LBIN.mkdir()
+    src=HERE/sys.argv[1]
+    dst=LBIN/sys.argv[2]
+    bless(src,dst)
 
 ###########################################################
 # INVOKE MAIN

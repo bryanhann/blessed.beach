@@ -1,3 +1,0 @@
-#!/bin/bash
-blessed.poet ez.main ${BLhere}/demo $*
-#__poet__/__main__ $*

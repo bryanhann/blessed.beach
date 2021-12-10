@@ -1,4 +1,5 @@
 #!/bin/bash
+#echo "[__eval__] $*"
 out=/tmp/delete.me.$RANDOM
 $*  > $out
 . $out

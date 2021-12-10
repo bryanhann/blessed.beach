@@ -1,0 +1,12 @@
+#!/bin/bash
+#export BLdot=$__BLESSED_DOT__
+#export BLclient=$__BLESSED_CLIENT__
+#export BLproxy=$__BLESSED_PROXY__
+export BLhere=$(dirname $BLthis)
+export BLname=$(basename $BLproxy)
+export BLPOET_ROOT=$(dirname $__BLESSED_CLIENT__)
+
+POET_ROOT=$BLhere
+
+$BLdot $BLthis.$*
+

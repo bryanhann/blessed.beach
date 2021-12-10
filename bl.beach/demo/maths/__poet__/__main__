@@ -1,0 +1,3 @@
+#!/bin/bash
+set | grep ^EZ
+. .bl.beach ez.main $0 $* 

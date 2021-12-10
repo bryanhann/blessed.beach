@@ -1,4 +1,7 @@
 #!/bin/bash
+#echo [$0] [$*]
+#echo . $BLhere/__eval__ $BLhere/__parse__ $*
+#echo . $BLhere/__handle__
 . $BLhere/__eval__ $BLhere/__parse__ $*
 . $BLhere/__handle__
 

@@ -1,0 +1,2 @@
+#!/bin/bash
+. bl.beach ez.main $0 $* 

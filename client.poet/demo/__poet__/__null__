@@ -1,3 +1,0 @@
-#!/bin/bash
-blessed.poet dump DEMO/__null__ $0 $*
-
