@@ -1,0 +1,5 @@
+#!/bin/bash
+blessed.poet dump DEMO/__miss__ $0 $*
+#$(dirname $0)/dump "DEMO Internal __miss__" $0 $*
+#P
+

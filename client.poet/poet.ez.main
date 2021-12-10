@@ -1,6 +1,11 @@
 #!/bin/bash
+. $BLhere/__eval__ $BLhere/__parse__ $*
+. $BLhere/__handle__
 
-BC=${__BLESSED_CLIENT__}
+#BC=${__BLESSED_CLIENT__}
+#this}.ez.parse #$*
+#. ${BC}.ez.handle
 
-. ${BC}.__eval__ ${BC}.ez.parse $*
-. ${BC}.ez.handle
+#. ${BC}.__eval__ ${BC}.ez.parse $*
+#. ${BC}.ez.handle
+

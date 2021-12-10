@@ -1,3 +1,0 @@
-#echo ++[$0]: [$*]
-$(dirname $0)/poet.ez.usage.py $1
-#echo --[$0]: [$*]

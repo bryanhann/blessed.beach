@@ -1,0 +1,3 @@
+blessed.poet dump INTERNAL/__help__ $0 $*
+#$BLhere/poet.ez.usage.py $1
+$BLhere/__usage__ $1

@@ -1,4 +1,0 @@
-#!/bin/bash
-#echo POET_EZ=${POET_EZ}
-#echo 22222222222 ${__BLESSED_DOT__} ${POET_EZ}.$*
-${__BLESSED_DOT__} ${POET_EZ}.$*

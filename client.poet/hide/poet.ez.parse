@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
+import os
+lfilter = lambda *x,**y: list(filter(*x,**y))
+def log(msg):
+    sys.stderr.write(msg + '\n')
+    sys.stderr.flush()
+
+LOG=os.environ.get('DEBUG_EZ_PARSE_LOG')
+if LOG: LOG=Path(LOG)
+THIS = Path(os.path.realpath(__file__))
+HERE = THIS.parent
+HOLE = HERE/'defaults'
+
+_HELP_ = HERE / '__help__'
+_NULL_ = HERE / '__null__'
+_MISS_ = HERE / '__miss__'
+
+
+PREFIX='EZ'
+class Namespace: pass
+G=Namespace()
+def dump():
+    ns=G
+    lines=[]
+    for name in dir(ns):
+        if name.startswith('__'):
+            continue
+        val=getattr(ns,name)
+        if not val:
+            val=''
+        if type(val)==type([]):
+            val=' '.join(val).strip()
+        val = repr(str(val))
+        line = f'export {PREFIX}_{name}={val}'
+        lines.append(line)
+    text='\n'.join(lines)
+    print(text)
+    if LOG:
+        LOG.write_text('-'*50 + '\n' + text + '\n\n')
+    #log('foo')
+    #log(text)#print(line)
+
+
+def firstfile(*paths):
+    def goodpath(path):
+        try: path=Path(path)
+        except: return False
+        return path.is_file()
+    paths=lfilter(goodpath,paths) + [None]
+    return paths[0]
+
+def main ():
+    args = sys.argv[1:] + ['']*3
+    this = Path(os.path.realpath(args.pop(0)))
+    here = this
+    while True:
+        if (here/'__poet__').is_dir(): break
+        if here.parent==here: break
+        here = here.parent
+    poet=here/'__poet__'
+    assert (here/'__poet__').is_dir()
+    opts=[]
+    while args[0].startswith( '-' ): opts.append(args.pop(0))
+    cmd  = args.pop(0)
+    hit  = cmd and firstfile\
+        ( here/cmd/'__poet__'/'__main__'
+        , here/cmd
+        , here/cmd/'__main__'
+        )
+    args = lfilter(None,args)
+    G.THIS = THIS
+    G.args = args
+    G.this = this
+    G.here = here
+    G.opts = opts
+    G.cmd  = cmd
+    G.args = args
+    G.hit  = hit
+
+    G.isHelp = opts and opts[0] in '-h --help'.split()
+    G.isNull = not cmd
+    G.isMiss = not hit
+    G.isHit  = bool(hit)
+
+    G.dunder_help = firstfile( poet/'__help__', HOLE/'__help__' )
+    G.dunder_miss = firstfile( poet/'__miss__', HOLE/'__miss__' )
+    G.dunder_null = firstfile( poet/'__null__', HOLE/'__null__' )
+#    G.hook_premain = firstfile( poet/'hook.premain' )
+#    G.hook_postmain = firstfile( poet/'hook.postmain' )
+
+    G.next = firstfile(
+        G.isHelp and G.dunder_help,
+        G.isNull and G.dunder_null,
+        G.isMiss and G.dunder_miss,
+        G.hit
+    )
+    dump()
+main()
+
+'''
+
+    # Z = the client's full pathname ($0)
+    # R = the client's root directory
+    # O = the client's options directory
+    # C = the client's subcommand (after options)
+    # U = the client's USAGE script
+    # N = the client's NULL script
+
+    export THIS=$1 ; shift
+    echo "[__dispatch__] assert: [$(basename $Z)] is [__main__]"
+    export R=$(dirname $Z)
+    export O=${R}/.opts
+    export USAGE=$O/__usage__
+    export NULL=$O/__null__
+
+    # Handle special options [-h] and [--help].
+    [ $1. = -h.      ] && $USAGE $Z $* && return
+    [ $1. = --help.  ] && $USAGE $Z $* && return
+
+    # Remove and process other options
+    while [ -f $O/o$1 ]; do . $O/o$1 $Z $*; shift; done
+
+    C=$1; shift
+    S1=$R/$C
+    S2=$R/$C/__main__
+
+    if   [ "$C" = "" ]; then NULL ${Z}
+    elif [ -f ${S1}  ]; then ${S1}      ${*}
+    elif [ -f ${S2}  ]; then ${S2}      ${*}
+    elif [ true      ]; then FN_EZ_MAIN ${C} ${*}
+    fi
+}
+
+'''
+

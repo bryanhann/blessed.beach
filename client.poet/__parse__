@@ -11,7 +11,7 @@ LOG=os.environ.get('DEBUG_EZ_PARSE_LOG')
 if LOG: LOG=Path(LOG)
 THIS = Path(os.path.realpath(__file__))
 HERE = THIS.parent
-HOLE = HERE
+HOLE = HERE/'defaults'
 
 _HELP_ = HERE / '__help__'
 _NULL_ = HERE / '__null__'
@@ -87,8 +87,8 @@ def main ():
     G.dunder_help = firstfile( poet/'__help__', HOLE/'__help__' )
     G.dunder_miss = firstfile( poet/'__miss__', HOLE/'__miss__' )
     G.dunder_null = firstfile( poet/'__null__', HOLE/'__null__' )
-    G.hook_premain = firstfile( poet/'hook.premain' )
-    G.hook_postmain = firstfile( poet/'hook.postmain' )
+#    G.hook_premain = firstfile( poet/'hook.premain' )
+#    G.hook_postmain = firstfile( poet/'hook.postmain' )
 
     G.next = firstfile(
         G.isHelp and G.dunder_help,

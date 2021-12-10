@@ -1,0 +1,4 @@
+#!/bin/bash
+echo HEYT!
+read
+${__BLESSED_DOT__} ${POET_EZ}.$*
