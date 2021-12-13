@@ -1,6 +1,4 @@
 #!/bin/bash
-#echo [__handle__]  [$*]
-#set | grep ^EZ
 if   [ "$EZ_isHelp" = "True" ]; then $EZ_dunder_help $EZ_cmd $EZ_args
 elif [ "$EZ_isNull" = "True" ]; then $EZ_dunder_null $EZ_cmd $EZ_args
 elif [ "$EZ_isMiss" = "True" ]; then $EZ_dunder_miss $EZ_cmd $EZ_args

@@ -1,1 +1,1 @@
-.bl.beach dump INTERNAL/__miss__ $0 $*
+$BEACH_PROXY dump INTERNAL/__miss__ $0 $*

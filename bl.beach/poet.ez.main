@@ -1,14 +1,4 @@
 #!/bin/bash
-#echo [$0] [$*]
-#echo . $BLhere/__eval__ $BLhere/__parse__ $*
-#echo . $BLhere/__handle__
-. $BLhere/__eval__ $BLhere/__parse__ $*
-. $BLhere/__handle__
-
-#BC=${__BLESSED_CLIENT__}
-#this}.ez.parse #$*
-#. ${BC}.ez.handle
-
-#. ${BC}.__eval__ ${BC}.ez.parse $*
-#. ${BC}.ez.handle
+. $BEACH__EVAL $BEACH__PARSE $*
+. $BEACH__HANDLE
 
