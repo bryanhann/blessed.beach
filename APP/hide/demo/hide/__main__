@@ -1,0 +1,23 @@
+#!/bin/bash
+__null__() {
+    echo null [$*]
+}
+__help__() {
+    echo help [$*]
+}
+
+#C=$1 ; shift
+#[ "$C" = ""       ] && C=__null__
+#[ "$C" = "-h"     ] && C=__help__
+#[ "$C" = "--help" ] && C=__help__
+
+if [ $(basename $0) = __main__ ]; then
+    D=$(dirname $0)
+    C=$1 ; shift
+    if   [ .$C = .           ]; then __null__ $0
+    elif [ -f $D/$C          ]; then $D/$C $*
+    elif [ -f $D/$C/__main__ ]; then echo b; $D/$C/__main__ $*
+    elif [ .$C = .           ]; then echo c; __null__ $0
+    elif [ .   = .           ]; then __help__ $0 $C $*
+    fi
+fi

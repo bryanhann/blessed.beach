@@ -1,0 +1,11 @@
+#!/bin/bash
+echo 88888888888888888888888888
+echo "[$0]: DIRECT CALL with args [$*]" > /dev/stderr
+[ "$1" = "" ] && {
+    echo "try '-h'."
+} || {
+    $BEACH_EASYCALL $0 $*
+    #. blessed.poet ez.main $0 $*
+}
+
+#set | grep ^EZ_

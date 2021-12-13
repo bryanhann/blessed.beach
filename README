@@ -1,7 +1,0 @@
-A stand-in for the 'bats' bash testsing tool.
-
-After installation, calling 
-    [$ blessed.bats ARGLIST]
-will internally clone the bats reps (if necessary)
-and then execute the relevant
-    [$ ./path/to/bats ARGLIST]

@@ -1,0 +1,7 @@
+echo ++[$0]
+while [ ! x$1 = x ]; do
+    echo "        [$1]"
+    shift
+done
+echo --[$0]
+

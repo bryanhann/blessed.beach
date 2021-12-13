@@ -1,0 +1,3 @@
+#!/bin/bash
+$BEACH_PROXY dump DEMO/__null__ $0 $*
+
