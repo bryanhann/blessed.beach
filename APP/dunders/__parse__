@@ -59,7 +59,7 @@ def main ():
     here = this
     #print ( f'222222222 {here}' )
     while True:
-        poet=here/'__poety__'
+        poet=here/'__poet__'
      #   print ( f'2 {here} -- {poet}' )
         if (here/'__poet__').is_dir(): break
         if here.parent==here: break
