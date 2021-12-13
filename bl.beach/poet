@@ -4,7 +4,8 @@ export_ BLhere          $(dirname $BLthis)
 export_ BLname          $(basename $BLproxy)
 export_ BLPOET_ROOT     $(dirname $__BLESSED_CLIENT__)
 export_ BEACH_PROXY     $BLproxy
-export_ BEACH_EASYCALL  "$BLproxy ez.main"
+export_ BEACH_EASYCALL   "$BLproxy ez.main"
+export_ BEACH_EASYSOURCE ". $BLproxy ez.main"
 export_ BEACH__USAGE    $BLhere/__usage__
 export_ BEACH__PARSE    $BLhere/__parse__
 export_ BEACH__HANDLE   $BLhere/__handle__
