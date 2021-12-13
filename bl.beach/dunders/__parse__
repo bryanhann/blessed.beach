@@ -11,7 +11,7 @@ LOG=os.environ.get('DEBUG_EZ_PARSE_LOG')
 if LOG: LOG=Path(LOG)
 THIS = Path(os.path.realpath(__file__))
 HERE = THIS.parent
-HOLE = HERE/'defaults'
+DEFAULTS = Path(os.environ['BEACH__DEFAULTS'])
 
 _HELP_ = HERE / '__help__'
 _NULL_ = HERE / '__null__'
@@ -53,12 +53,18 @@ def firstfile(*paths):
 
 def main ():
     args = sys.argv[1:] + ['']*3
+    zero = args[0]
     this = Path(os.path.realpath(args.pop(0)))
+    #print( 909090999, zero )
     here = this
+    #print ( f'222222222 {here}' )
     while True:
+        poet=here/'__poety__'
+     #   print ( f'2 {here} -- {poet}' )
         if (here/'__poet__').is_dir(): break
         if here.parent==here: break
         here = here.parent
+    #print ( f'1222222222 {here}' )
     poet=here/'__poet__'
     assert (here/'__poet__').is_dir()
     opts=[]
@@ -84,9 +90,9 @@ def main ():
     G.isMiss = not hit
     G.isHit  = bool(hit)
 
-    G.dunder_help = firstfile( poet/'__help__', HOLE/'__help__' )
-    G.dunder_miss = firstfile( poet/'__miss__', HOLE/'__miss__' )
-    G.dunder_null = firstfile( poet/'__null__', HOLE/'__null__' )
+    G.dunder_help = firstfile( poet/'__help__', DEFAULTS/'__help__' )
+    G.dunder_miss = firstfile( poet/'__miss__', DEFAULTS/'__miss__' )
+    G.dunder_null = firstfile( poet/'__null__', DEFAULTS/'__null__' )
 #    G.hook_premain = firstfile( poet/'hook.premain' )
 #    G.hook_postmain = firstfile( poet/'hook.postmain' )
 

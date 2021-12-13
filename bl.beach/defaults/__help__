@@ -1,2 +1,2 @@
-$BEACH_PROZY dump INTERNAL/__help__ $0 $*
-$BLhere/__usage__ $1
+$BEACH_PROXY dump INTERNAL/__help__ $0 $*
+$BEACH__USAGE $1

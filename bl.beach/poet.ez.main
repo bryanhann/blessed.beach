@@ -1,4 +1,0 @@
-#!/bin/bash
-. $BEACH__EVAL $BEACH__PARSE $*
-. $BEACH__HANDLE
-
