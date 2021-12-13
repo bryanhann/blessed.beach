@@ -1,0 +1,8 @@
+$BEACH_PROXY demo maths mul 2 3  | grep "result: 5"
+_test_result_1=$?
+
+$BEACH_PROXY demo maths -h | grep "mul - undocumented"
+_test_result_2=$?
+echo "---------------------------------------------"
+set | grep "^_test_result"
+
