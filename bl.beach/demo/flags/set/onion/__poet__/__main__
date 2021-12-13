@@ -1,2 +1,2 @@
 #!/bin/bash
-. bl.beach ez.main $0 $* 
+$BEACH_EASYSOURCE $0 $* 

@@ -4,7 +4,7 @@ echo "[$0]: DIRECT CALL with args [$*]" > /dev/stderr
 [ "$1" = "" ] && {
     echo "try '-h'."
 } || {
-    $BEACH_EASYCALL2 $0 $*
+    $BEACH_EASYCALL $0 $*
     #. blessed.poet ez.main $0 $*
 }
 

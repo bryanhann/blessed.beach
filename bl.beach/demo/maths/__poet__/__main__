@@ -1,3 +1,3 @@
 #!/bin/bash
 set | grep ^EZ
-. .bl.beach ez.main $0 $* 
+$BEACH_EASYSOURCE $0 $*
