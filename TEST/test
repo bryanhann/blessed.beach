@@ -1,9 +1,3 @@
 #!/bin/bash
-.bl.beach-demo maths mul 2 3  | grep "result: 5"
-_test_result_1=$?
-
-.bl.beach-demo maths -h | grep "mul - undocumented"
-_test_result_2=$?
-echo "---------------------------------------------"
-set | grep "^_test_result"
+blessed.bats $0.bats
 
