@@ -1,4 +1,6 @@
 #!/bin/bash
+export BCP_LBIN=~/.local/bin
+mkdir -p $BCP_LBIN
 pushd $(dirname $0) > /dev/null
 HERE=$PWD
 popd > /dev/null
