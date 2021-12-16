@@ -1,0 +1,13 @@
+#!/bin/bash
+
+pushd .. >/dev/null
+export BATS_LIB=$PWD/.build/bats_lib
+popd > /dev/null
+
+C="git clone https://github.com"
+
+[ -d $BATS_LIB ] || {
+    $C/sstephenson/bats     $BATS_LIB/bats
+    $C/ztombol/bats-assert  $BATS_LIB/bats-assert
+    $C/ztombol/bats-support $BATS_LIB/bats-support
+}
