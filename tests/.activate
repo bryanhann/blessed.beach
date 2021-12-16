@@ -2,6 +2,7 @@
 
 pushd .. >/dev/null
 export BATS_LIB=$PWD/.build/bats_lib
+./install
 popd > /dev/null
 
 C="git clone https://github.com"

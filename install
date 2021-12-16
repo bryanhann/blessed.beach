@@ -1,4 +1,4 @@
 #!/bin/bash
 . $0.init $0
-bless FOO/foo   FOO
+bless FOO/foo blessed.foo
 
