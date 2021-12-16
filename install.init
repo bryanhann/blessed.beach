@@ -1,0 +1,11 @@
+#!/bin/bash
+pushd $(dirname $0) > /dev/null
+HERE=$PWD
+popd > /dev/null
+BASE=$HERE/$(basename $1)
+bless () {
+    export client=${HERE}/$1
+    export proxy=${BCP_LBIN}/$2
+    $BASE.template ${client} ${proxy} > ${proxy}
+    chmod +x ${proxy}
+}

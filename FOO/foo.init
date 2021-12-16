@@ -1,0 +1,14 @@
+#!/source/this/sh
+export NEWF_INIT=". $(dirname $NEWF_MAIN)/__init__"
+
+$NEWF_INIT $*
+
+export NEWF_NAME=$(basename ${NEWF_PROXY:-$NEWF_MAIN})
+export NEWF_REAL=$(newf_real $NEWF_MAIN)
+export NEWF_CBDIR=$(newf_mktmpd)
+export NEWF_DOT=$(newf_dotornot ${NEWF_ZERO})
+
+#[ -f ${NEWF_ZERO} ]\
+#    && export NEWF_DOT=no \
+#    || export NEWF_DOT=yes
+

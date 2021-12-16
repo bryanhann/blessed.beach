@@ -1,4 +1,4 @@
 #!/bin/bash
-$0.bless APP/poet .bl.beach
-$0.bless DEMO/demo .bl.beach-demo
-$0.bless TEST/test .bl.beach-test
+. $0.init $0
+bless FOO/foo   FOO
+

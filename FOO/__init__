@@ -1,0 +1,46 @@
+#!/source/this/sh
+NEWF_init_args="$@"
+blcb () {
+    echo "#cb " $*
+}
+
+bldump () {
+    echo "------------------------------------"
+    set | grep ^NEWF_
+    for arg in "$@"; do
+        echo "[$arg]"
+    done
+}
+#!/source/this/bash
+newf_dump () {
+    echo
+    echo '-----------------' $1
+    for arg in "$@"; do echo "    [$arg]"; done
+    echo '-----------------'
+    set | grep ^NEWF
+    echo '-----------------' $1
+    echo
+}
+newf_dotornot() { [ -f ${1} ] || echo '.' ; }
+
+newf_mktmpd () {
+    local CB=/tmp/newf.cb.$RANDOM.$RANDOM.$RANDOM
+    mkdir $CB && echo $CB
+}
+newf_real(){ python3 -c "import os.path;print(os.path.realpath(\"$1\"))"; }
+
+newf_postinit () {
+    newf_main $*
+    export NEWFerr=$?
+    [ "$NEWFdot" = "" ] && exit $NEWFerr || return $NEWFerr
+}
+
+newf_init_zero_this_args () {
+    echo [new_init] [$*]
+    [ -z "$NEWF_INIT" ] || return
+    echo FIRST INITIAL.
+    [ -f $NEWF_ZERO ] && export NEWF_DOT= || export NEWF_DOT=.
+    export NEWF_REAL=$(newf_real $NEWF_THIS)
+    export NEWF_ROOT=$(dirname $NEWF_REAL)
+    export NEWF_INIT=${NEWF_ROOT}/__init__
+}
