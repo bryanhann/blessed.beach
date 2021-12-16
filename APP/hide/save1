@@ -1,8 +1,0 @@
-#!/bin/bash
-echo 444 {$__BLESSED_CLIENT__}
-
-. ${__BLESSED_CLIENT__}.__eval__ \
-. blessed.poet  ez.parse \
-$*
-# x$. poet.eval blessed.poet  ez.parse $*
-. blessed.poet ez.main

@@ -1,3 +1,0 @@
-#!/bin/bash
-set | grep ^EZ
-$BEACH_EASYSOURCE $0 $*

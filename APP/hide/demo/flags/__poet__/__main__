@@ -1,2 +1,0 @@
-#!/bin/bash
-$BEACH_EASYSOURCE $0 $*

@@ -1,9 +1,0 @@
-#!/bin/bash
-if [ $(echo $1|cut -c1-1) = "/" ]; then
-    echo 999 [$0] [$*]
-    $BEACH__PARSE $*
-    . $BEACH__EVAL $BEACH__PARSE $*
-    . $BEACH__HANDLE
-else
-    echo "[EASYCALL]: must be givin absolute pathname"
-fi

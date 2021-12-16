@@ -1,3 +1,0 @@
-#!/bin/bash
-$BEACH_EASYCALL  ${BLhere}/demo $*
-#.bl.beach ez.main ${BLhere}/demo $*

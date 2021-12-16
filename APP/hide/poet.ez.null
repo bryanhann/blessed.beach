@@ -1,6 +1,0 @@
-echo [$0]: [$*]
-NULL=$(dirname $1)/.opts/__null__
-echo MAIN IS [$1]
-echo NULL IS [$NULL]
-shift
-[ -x $NULL ] && $NULL $*
