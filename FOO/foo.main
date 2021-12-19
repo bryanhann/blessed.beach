@@ -1,7 +1,0 @@
-#!/bin/bash
-$NEWF_INIT
-echo ++[$0] [$*]
-newf_dump $0 "$@"
-
-echo --[$0] [$*]
-

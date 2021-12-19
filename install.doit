@@ -1,0 +1,31 @@
+#!/bin/bash
+pushd $(dirname $0) > /dev/null
+HERE=$PWD
+popd > /dev/null
+
+NAME=$1
+LBIN=${HOME}/.local/bin
+PROXY=${HERE}/.proxies/${NAME}
+CLIENT=${HERE}/blessed.${NAME}/${NAME}
+LINK=${LBIN}/blessed.${NAME}
+
+install () {
+    mkdir -p $(dirname $PROXY)
+    rm -rf $PROXY
+    touch $PROXY
+    chmod +x $PROXY
+    write > $PROXY
+    rm -rf $LINK
+    ln -s $PROXY $LINK
+}
+
+write () {
+cat <<HEREDOC
+#!/bin/bash
+export MESELF=$CLIENT
+[ -f \$0 ] && export MEDOT= || export MEDOT=.
+\$MEDOT \$MESELF "\$@"
+HEREDOC
+}
+
+install $*

@@ -1,0 +1,26 @@
+#!/bin/bash
+echo "######################################"
+echo ++[$0] [$*]
+set | grep ^ME
+main () {
+    [ true          ] && export NEWF_ZERO=$1
+    [ true          ] && export NEWF_CLIENT=
+    [ true          ] && export NEWF_PROXY=
+    [ -f $NEWF_ZERO ] && export NEWF_DOT=
+    [ -f $NEWF_ZERO ] || export NEWF_DOT=.
+    shift
+
+    while [ "$1" = "}set" ]; do
+        export NEWF_$2=$3; 
+        shift 3; 
+    done
+
+    [ x$1 = x}die ] && return $2
+
+    export NEWF_MAIN=${NEWF_CLIENT:-$NEWF_ZERO}
+    . ${NEWF_MAIN}.init "$@"
+    ${NEWF_MAIN}.main "$@"
+}
+
+#echo ++[$0]  $*
+#main $0 "$@"
