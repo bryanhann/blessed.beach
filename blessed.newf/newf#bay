@@ -1,5 +1,6 @@
 #!/bin/bash
-echo ++NEWF-BAYMAN [$0] [$*]
-$__INIT__
+${__INIT__}
+echo ++[$(basename $0)] [$*]
 THIS_handle $0 $*
+echo --[$(basename $0)] [$*]
 
