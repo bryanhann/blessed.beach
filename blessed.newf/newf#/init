@@ -14,7 +14,6 @@ THIS_handle () {
     here=$(dirname ${this})
     name=$(basename ${this})
     hole="${this}#"
-    echo 77 $hole
     [ "$1" = ""       ] && { THIS_null $*; return $?; }
     [ "$1" = "-h"     ] && { THIS_help $*; return $?; }
     [ "$1" = "--help" ] && { THIS_help $*; return $?; }
@@ -23,9 +22,10 @@ THIS_handle () {
         [ -f $opt ] || break
         shift; . $opt; shift $MESHIFT
     done
-    [ ! -f ${this}-${1} ] && { THIS_miss $*; return $?; }
-    export THIS=${this}-${1}
-    ${this}-"$@"
+    [ ! -f "${this}#${1}" ] && { THIS_miss $*; return $?; }
+    export THIS="${this}#${1}"
+    shift
+    ${THIS} "$@"
     return $?
 }
 blcb () {
