@@ -1,17 +1,44 @@
 #!/source/this/sh
-NEWF_init_args="$@"
+export __INIT__=". ${MESELF}#/init"
+THIS_help () {
+    echo help me
+}
+THIS_null () {
+    echo try -h
+}
+THIS_miss () {
+    echo "[$name]: undefined command [$1]"
+}
+THIS_handle () {
+    this=${1}; shift
+    here=$(dirname ${this})
+    name=$(basename ${this})
+    hole="${this}#"
+    echo 77 $hole
+    [ "$1" = ""       ] && { THIS_null $*; return $?; }
+    [ "$1" = "-h"     ] && { THIS_help $*; return $?; }
+    [ "$1" = "--help" ] && { THIS_help $*; return $?; }
+    while true; do
+        opt=${hole}/opt${1}
+        [ -f $opt ] || break
+        shift; . $opt; shift $MESHIFT
+    done
+    [ ! -f ${this}-${1} ] && { THIS_miss $*; return $?; }
+    export THIS=${this}-${1}
+    ${this}-"$@"
+    return $?
+}
 blcb () {
     echo "#cb " $*
 }
 
 bldump () {
     echo "------------------------------------"
-    set | grep ^NEWF_
+    set | grep ^ME
     for arg in "$@"; do
-        echo "[$arg]"
+        echo "      [$arg]"
     done
 }
-#!/source/this/bash
 newf_dump () {
     echo
     echo '-----------------' $1
@@ -43,4 +70,8 @@ newf_init_zero_this_args () {
     export NEWF_REAL=$(newf_real $NEWF_THIS)
     export NEWF_ROOT=$(dirname $NEWF_REAL)
     export NEWF_INIT=${NEWF_ROOT}/__init__
+}
+[ "$1" = "--meself" ] && {
+    shift
+    THIS_handle $MESELF "$@"
 }

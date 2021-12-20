@@ -1,0 +1,5 @@
+#!/bin/bash
+echo ++NEWF-BAYMAN [$0] [$*]
+. $MESELF.init
+THIS_handle $0 $*
+
